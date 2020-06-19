@@ -2,14 +2,13 @@ A sample README.md file
 
 # Research code on deep learning for natural language processing/sentiment analysis
 ---
-## The Goal of this project is to explore new ideas for improving the accuracy and robustness of neural networks for NLP/sentiment analysis
+## The goal of this project is to explore new ideas for improving the accuracy and robustness of neural networks for NLP/sentiment analysis
 
-## Code status, pre-release, production.
+## Code is prototype, use as is, see licensing agreement too.
 
 ## Installation Process
 
-## Contact Information
+## Contacts: apostol.vassilev@nist.gov, munawar.hasan@nist.gov
 
-## Acknowledgement for reused code if any
 
 
