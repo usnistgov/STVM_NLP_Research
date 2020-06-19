@@ -1,5 +1,3 @@
-A sample README.md file
-
 # Research code on deep learning for natural language processing/sentiment analysis
 ---
 ## The goal of this project is to explore ideas for improving the accuracy and robustness of neural networks for NLP/sentiment analysis
