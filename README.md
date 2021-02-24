@@ -8,7 +8,7 @@ Check our research paper ["Can you tell? SSNet - a Sagittal Stratum-inspired Neu
 
 ## Installation Process: TBD
 
-## Contacts: apostol.vassilev@nist.gov, munawar.hasan@nist.gov
+## Contacts: apostol.vassilev@nist.gov, munawar.hasan@nist.gov, honglan.jin@nist.gov
 
 
 
