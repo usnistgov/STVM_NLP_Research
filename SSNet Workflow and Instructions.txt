@@ -1,0 +1,30 @@
+SSNet workflow with input and output data description
+
+1. Split IMDB labeled train data into 20K and 5K. Make sure the split data is balanced. I.e, pos and pos reviews are evenly split in both files.
+Source code: STVM_NLP_Research\model_c_d\misc-src\split-imdb-train-dataset.ipynb
+Input: STVM_NLP_Research\model_c_d\IMDB\data\imdb_master.zip. Uncompress the file as imdb_master.csv before running.
+Output 1: STVM_NLP_Research\data\imdb_train_split_20000.csv
+Output 2: STVM_NLP_Research\data\imdb_train_split_5000.csv
+
+2. Train individual models.
+
+Model_3 Bert model: 
+Source code: STVM_NLP_Research\model_c_d\IMDB\model_c_bert.ipynb
+Input: STVM_NLP_Research\model_c_d\IMDB\data\imdb_master.zip. Uncompress the file as imdb_master.csv before running.
+Output 1: A trained model using 20K train data (same reviews as in STVM_NLP_Research\data\imdb_train_split_20000.csv).
+Output 2: STVM_NLP_Research\data\model_bert_result_split_5000_20000.csv. This file has prediction probability for every review in split train data of 5K (same reviews as in STVM_NLP_Research\data\imdb_train_split_5000.csv) using the model created in output 1.
+Output 3: STVM_NLP_Research\data\model_bert_result_split_25000_20000.csv. This file has prediction probability for every review in IMDB test dataset of 25K using the model created in output 1.
+
+Model_4 USE model:
+Source code: STVM_NLP_Research\model_c_d\IMDB\model_d_use.ipynb
+Input: STVM_NLP_Research\model_c_d\IMDB\data\imdb_master.zip. Uncompress the file as imdb_master.csv before running.
+Output 1: A trained model using 20K train data (same reviews as in STVM_NLP_Research\data\imdb_train_split_20000.csv).
+Output 2: STVM_NLP_Research\data\model_use_result_split_5000_20000.csv. This file has prediction probability for every review in split train data of 5K (same reviews as in STVM_NLP_Research\data\imdb_train_split_5000.csv) using the model created in output 1.
+Output 3: STVM_NLP_Research\data\model_use_result_split_25000_20000.csv. This file has prediction probability for every review in IMDB test dataset of 25K using the model created in output 1.
+
+3. Combine participating models
+Source code: TODO: please fill in
+Input 1: participating individual model created prediction files using train 5K (same reviews as in STVM_NLP_Research\data\imdb_train_split_5000.csv). Use this 5K predictions to train combining weights.
+Input 2: participating individual model created prediction files using test dataset of 25K.
+Output: 
+Output: Final combined predictions and performance from participating models on test dataset of 25K. 
