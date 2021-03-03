@@ -21,6 +21,13 @@ results on a representative benchmark dataset and comparisons to other methods s
 Check our research paper ["Can you tell? SSNet - a Sagittal Stratum-inspired Neural Network
   Framework for Sentiment Analysis"](https://arxiv.org/abs/2006.12958) for context and details.
 
+| Proposed Method  | Max Accuracy (%) |
+| ------------- | ------------- |
+| Neural Network Combiner  | 94.11  |
+| Bayesian Decision Rule Combiner  | 93.77  |
+| Heuristic-Hybrid Combiner  | 94.0  |
+
+
 ## Prototype code, see the [licensing agreement](https://github.com/usnistgov/STVM_NLP_Research/blob/master/LICENSE.md) for terms of use.
 
 ## Installation Process: TBD
