@@ -8,6 +8,13 @@ Output 2: STVM_NLP_Research\data\imdb_train_split_5000.csv
 
 2. Train individual models.
 
+Model_1 BowTie:
+Trained on 20K dataset. The prediction file on 5K: "data/model_a_5ktrain.csv" and on 25K: "data/model_a_25ktest.csv"
+
+Model_2 BiLSTM:
+Trained on 20K dataset. The prediction file on 5K: "data/model_b_5ktrain.csv" and on 25K: "data/model_b_25ktest.csv"
+
+
 Model_3 Bert model: 
 Source code: STVM_NLP_Research\model_c_d\IMDB\model_c_bert.ipynb
 Input: STVM_NLP_Research\model_c_d\IMDB\data\imdb_master.zip. Uncompress the file as imdb_master.csv before running.
@@ -22,9 +29,17 @@ Output 1: A trained model using 20K train data (same reviews as in STVM_NLP_Rese
 Output 2: STVM_NLP_Research\data\model_use_result_split_5000_20000.csv. This file has prediction probability for every review in split train data of 5K (same reviews as in STVM_NLP_Research\data\imdb_train_split_5000.csv) using the model created in output 1.
 Output 3: STVM_NLP_Research\data\model_use_result_split_25000_20000.csv. This file has prediction probability for every review in IMDB test dataset of 25K using the model created in output 1.
 
+
 3. Combine participating models
-Source code: TODO: please fill in
-Input 1: participating individual model created prediction files using train 5K (same reviews as in STVM_NLP_Research\data\imdb_train_split_5000.csv). Use this 5K predictions to train combining weights.
-Input 2: participating individual model created prediction files using test dataset of 25K.
-Output: 
-Output: Final combined predictions and performance from participating models on test dataset of 25K. 
+Source Code files:
+	1) combiners/SSNet_predictions.py: run this file for evaluating accuracy of all the methods proposed in the paper
+	2) combiners/SSNet_Neural_Network.py: neural network combiner
+	3) combiners/SSNet_Bayesian_Decision.py: bayesian decision combiner
+	4) combiners/SSNet_Heuristic_Hybrid.py: heuristic hybrid combiner
+
+Use following instructions to run the combiner:
+1) The combiner implementation consists of four files placed in the directory "combiners". The file "SSNet_predictions.py" expects 5K train data and probabilities predicted on tain and test data by all the four models. Currently all these required files are placed inside the data folder. Please note that file names may be little different, please rename if required before next step
+2) Run "SSNet_predictions.py"
+3) It could take a while to complete the three proposed methods but once done the output will produce all the accuracies 
+4) The output contains train (5K) accuracy and test accuracy (25K)
+5) There would be minor changes in accuracy for neural network combiner
