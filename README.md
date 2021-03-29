@@ -34,7 +34,9 @@ Check our research paper ["Can you tell? SSNet - a Sagittal Stratum-inspired Neu
 The project is written using the [tensorflow](https://www.tensorflow.org/install) library and is compatible with tensorflow 2.x. The dataset used for the experiments can be found at [SLMRD](https://ai.stanford.edu/~amaas/data/sentiment/) which consists of 25K train reviews and 25K test reviews.
 
 ## WorkFlow of SSNet
-The project consists of five modules: a) Split the dataset b) Training individual model c) Generating prediction from individual models d) Training the combiners e) Generating prediction from the combiner.  Follow the below instructions to split the dataset:
+Following is the directory structure:
+<img src="images/directory_structure.png" height="20">
+The project consists of five modules: a) Split the dataset b) Training individual model c) Generating prediction from individual models d) Training the combiners e) Generating prediction from the combiner. Follow the below instructions to split the dataset and evaluate the models or combiners:
 * Split train dataset:
 	* Split IMDB labeled train data into 20K and 5K. Make sure the split data is balanced i.e, pos and pos reviews are evenly split in both files.
 	* Source code: STVM_NLP_Research\model_c_d\misc-src\split-imdb-train-dataset.ipynb
