@@ -36,6 +36,7 @@ The project is written using the [tensorflow](https://www.tensorflow.org/install
 ## WorkFlow of SSNet
 Following is the directory structure:
 <img src="images/directory_structure.png" height="20">
+
 The project consists of five modules: a) Split the dataset b) Training individual model c) Generating prediction from individual models d) Training the combiners e) Generating prediction from the combiner. Follow the below instructions to split the dataset and evaluate the models or combiners:
 * Split train dataset:
 	* Split IMDB labeled train data into 20K and 5K. Make sure the split data is balanced i.e, pos and pos reviews are evenly split in both files.
@@ -49,10 +50,10 @@ The project consists of five modules: a) Split the dataset b) Training individua
 	* Model_3: Trained on 20K dataset. 
 	* Model_4: Trained on 20K dataset. 
 * Generating prediction from individual models: 
-	* The prediction file on 5K: "data/model_a_5ktrain.csv" and on 25K: "data/model_a_25ktest.csv"
-	* The prediction file on 5K: "data/model_b_5ktrain.csv" and on 25K: "data/model_b_25ktest.csv"
-	* The prediction file on 5K: "data/model_c_5ktrain.csv" and on 25K: "data/model_c_25ktest.csv"
-	* The prediction file on 5K: "data/model_d_5ktrain.csv" and on 25K: "data/model_d_25ktest.csv"
+	* The prediction file on 5K: "data/model_1_5ktrain.csv" and on 25K: "data/model_1_25ktest.csv"
+	* The prediction file on 5K: "data/model_2_5ktrain.csv" and on 25K: "data/model_2_25ktest.csv"
+	* The prediction file on 5K: "data/model_3_5ktrain.csv" and on 25K: "data/model_3_25ktest.csv"
+	* The prediction file on 5K: "data/model_4_5ktrain.csv" and on 25K: "data/model_4_25ktest.csv"
 * Training the combiners: please check "Combiners" section
 * Generating prediction from the combiner: pleased check "Combiners" section
 
