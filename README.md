@@ -39,13 +39,13 @@ The data is downloadable as a `.tar.gz` file which contains text files sorted in
 Following is the directory structure:
 <img src="images/directory_structure.png" height="20">
 
-The following is an overview of each file and folder in the repository, intended to reduce challenges with setup for new users.
+The following is an overview of each file and folder in the repository, intended to reduce challenges with setup for new users. Where applicable, references to the paper and/or instructions for how to run the experiments are included.
 
- - combiners
-    - SSNet_predictions.py
-    - SSNet_Neural_Network.py
-    - SSNet_Bayesian_Decision.py
-    - SSNet_Heuristic_Hybrid.py
+ - combiners - Contains scripts for training (when applicable) the combiner models and using them to generate predictions on the data; it is possible to use the pre-generated predictions from each model included in the repository and run only these scripts.
+    - SSNet_predictions.py - Runs the combiner scripts from the other three Python files and tests the trained models on the data
+    - SSNet_Neural_Network.py - The neural network combiner; see 2.1 for an in-depth explanation of the model and Table 2 in 3.3.1 for results
+    - SSNet_Bayesian_Decision.py - Bayesian decision rule combiners; section 2.2
+    - SSNet_Heuristic_Hybrid.py - Heuristic hybrid combiner; section 2.3
  - data
  - models
      - train
