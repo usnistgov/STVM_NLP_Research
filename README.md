@@ -37,6 +37,35 @@ The project is written using the [tensorflow](https://www.tensorflow.org/install
 Following is the directory structure:
 <img src="images/directory_structure.png" height="20">
 
+The following is an overview of each file and folder in the repository, intended to reduce challenges with setup for new users.
+
+ - combiners
+    - SSNet_predictions.py
+    - SSNet_Neural_Network.py
+    - SSNet_Bayesian_Decision.py
+    - SSNet_Heuristic_Hybrid.py
+ - data
+ - models
+     - train
+     - model_{1_2}
+     - model_{3,4}
+         - use_helpers
+         - model_helpers
+         - misc-src
+             - split-imdb-train-dataset.ipynb
+         - IMDB
+             - helpers
+                 - __init1__.py
+                 - imdb_preprocess_functions.py
+             - data
+             - model_4_use.ipynb
+             - model_3_bert.ipynb
+         - bert_helpers
+ - test
+ - images
+ - README.md
+ - LICENSE.md
+
 The project consists of five modules: a) Split the dataset b) Training individual model c) Generating prediction from individual models d) Training the combiners e) Generating prediction from the combiner. Follow the below instructions to split the dataset and evaluate the models or combiners:
 * Split train dataset:
 	* Split IMDB labeled train data into 20K and 5K. Make sure the split data is balanced i.e, pos and pos reviews are evenly split in both files.
