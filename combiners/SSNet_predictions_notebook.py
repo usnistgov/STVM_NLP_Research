@@ -445,6 +445,30 @@ def grouped_plot(C=0, sections=2, reduce=0):
 # Loop through the combiner indices and generate the graph for each one
 for i in range(2):
     grouped_plot(C=i, sections=4, reduce=1)
+
+
+# In[131]:
+
+
+p = []
+# for f in range(2):
+dataset = '5ktrain'
+plot_size = (12, 6)
+fig = plt.figure(figsize=plot_size)
+plt.rcParams["figure.figsize"] = plot_size
+fig, ax = plt.subplots()
+# ax.set_xscale('log')
+# ax.set_yscale('log')
+
+for f in list('1234'):
+    with open(f'./model_{int(f)}_{dataset}.csv') as predictions:
+        reader = csv.reader(predictions)
+        data = list(reader)
+        data.sort(key=lambda d: d[1])
+        p.append(data[:])
+points = [[float(m[0]) for m in n if '.' in m[0]] for n in p]
+ax.scatter(*points[:2], alpha=0.5, s=5, c=points[2], cmap='inferno')
+ax.axis('off')
 # In[ ]:
 
 
