@@ -469,6 +469,26 @@ for f in list('1234'):
 points = [[float(m[0]) for m in n if '.' in m[0]] for n in p]
 ax.scatter(*points[:2], alpha=0.5, s=5, c=points[2], cmap='inferno')
 ax.axis('off')
+
+
+# In[133]:
+
+
+target = [0, 1, 2, 3]
+A = 1 / len(target)
+# for t in target:
+#     plt.hist(points[t], bins=50, alpha=A)
+
+plt.style.use('seaborn-deep')
+x = plt.hist([points[t] for t in target], bins=15)
+
+
+# In[79]:
+
+
+points[0][-100:]
+
+
 # In[ ]:
 
 
