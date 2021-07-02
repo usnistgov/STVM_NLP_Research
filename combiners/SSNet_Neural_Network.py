@@ -81,6 +81,7 @@ def nn(tr_list, imdb_tr_list, te_list, imdb_te_list):
     TE_PROBA = len(te_list)
 
     for idx in range(len(te_list)):
+        print(len(te_list[idx]), TE_SAMPLE_SIZE)
         assert len(te_list[idx]) == TE_SAMPLE_SIZE, "test mismatch samples"
 
 
@@ -115,7 +116,7 @@ def nn(tr_list, imdb_tr_list, te_list, imdb_te_list):
 
     _acc = float(correct_pred)/float(TE_SAMPLE_SIZE)
     #print("Accuracy: ", float(correct_pred)/float(TE_SAMPLE_SIZE))
-    tr_acc = hist.history['acc'][EPOCH-1] * 100.
+    tr_acc = hist.history['accuracy'][EPOCH-1] * 100.
     te_acc = _acc * 100.
     return tr_acc, te_acc, weights
 
