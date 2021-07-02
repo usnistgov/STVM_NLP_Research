@@ -48,24 +48,25 @@ The following is an overview of each file and folder in the repository, intended
     - SSNet_Heuristic_Hybrid.py - Heuristic hybrid combiner; section 2.3
  - data - Contains `.csv` files with training and testing data for each of the four component models *(which script generates these?)*
  - models - Contains each of the individual models that are integrated by the combiner(s)
-     - train
+     - train - Contains the raw text data (categorized by positive/negative sentiment label)
          - neg - Negative samples from the dataset
              - Text files with names of the form `####_#.txt`; e.g., `437_2.txt` or `7932_4.txt`
          - pos - Positive samples from the dataset
+             - Same format as `train/neg/...`
      - model_{1_2} - Models 1 and 2; respectively, the bag-of-words basd BowTie model (3.2.1) and the BLSTM model with attention and Glove embeddings (3.2.2)
          - model_2.h5 - Pre-trained weights for Model 2 (BLSTM with Attention and Glove Embeddings); see section 3.2.2
-     - model_{3,4} - Models 3 and 4; respectively, the pretrained BERT model (3.2.3) and  Universal Sentence Encoder (3.2.4)
+     - model_{3,4} - Models 3 and 4; respectively, the pretrained BERT model (3.2.3) and Universal Sentence Encoder (3.2.4)
          - use_helpers
          - model_helpers
          - misc-src
-             - split-imdb-train-dataset.ipynb
+             - split-imdb-train-dataset.ipynb - Run the preprocessing functions to prepare the dataset
          - IMDB
              - helpers
                  - __init1__.py
                  - imdb_preprocess_functions.py
              - data
-             - model_4_use.ipynb
-             - model_3_bert.ipynb
+             - model_4_use.ipynb - Code for training Model 4 (BERT) and generating predictions for the combiner training process
+             - model_3_bert.ipynb - Code for training Model 3 (USE) and generating predictions
          - bert_helpers
  - test
  - images
