@@ -37,17 +37,18 @@ from SSNet_Neural_Network import nn
 from SSNet_Bayesian_Decision import bayesian_decision
 from SSNet_Heuristic_Hybrid import heuristic_hybrid
 
+base_dir = '../data/'
 
-imdb_5ktr = 'imdb_train_5k.csv'
-model_a_tr = 'model_a_5ktrain.csv'
-model_b_tr = 'model_b_5ktrain.csv'
-model_c_tr = 'model_c_bert_result_train_5k.csv'
-model_d_tr = 'model_d_use_result_train_5k.csv'
+imdb_5ktr = base_dir + 'imdb_train_split_5000.csv'
+model_1_tr = base_dir + 'model_1_5ktrain.csv'
+model_2_tr = base_dir + 'model_2_5ktrain.csv'
+model_3_tr = base_dir + 'model_3_5ktrain.csv'
+model_4_tr = base_dir + 'model_4_5ktrain.csv'
 
-model_a_te = 'model_a_25ktest.csv'
-model_b_te = 'model_b_25ktest.csv'
-model_c_te = 'model_c_bert_result_test_25k.csv'
-model_d_te = 'model_d_use_result_test_25k.csv'
+model_1_te = base_dir + 'model_1_25ktest.csv'
+model_2_te = base_dir + 'model_2_25ktest.csv'
+model_3_te = base_dir + 'model_3_25ktest.csv'
+model_4_te = base_dir + 'model_4_25ktest.csv'
 
 
 def get_training_dict_threshold(split):
@@ -55,8 +56,8 @@ def get_training_dict_threshold(split):
 
     if split == "5K":
         training_dict["5K"] = [
-            [model_a_tr, model_b_tr, model_c_tr, model_d_tr], [
-                model_a_te, model_b_te, model_c_te, model_d_te]
+            [model_1_tr, model_2_tr, model_3_tr, model_4_tr], [
+                model_1_te, model_2_te, model_3_te, model_4_te]
         ]
         
     return training_dict
@@ -65,40 +66,40 @@ def get_training_dict(split):
     training_dict = dict()
     if split == "5K":
         training_dict["model_{1,2}"] = [
-            [model_a_tr, model_b_tr], [model_a_te, model_b_te]
+            [model_1_tr, model_2_tr], [model_1_te, model_2_te]
         ]
         training_dict["model_{1,3}"] = [
-            [model_a_tr, model_c_tr], [model_a_te, model_c_te]
+            [model_1_tr, model_3_tr], [model_1_te, model_3_te]
         ]
         training_dict["model_{1,4}"] = [
-            [model_a_tr, model_d_tr], [model_a_te, model_d_te]
+            [model_1_tr, model_4_tr], [model_1_te, model_4_te]
         ]
         training_dict["model_{2,3}"] = [
-            [model_b_tr, model_c_tr], [model_b_te, model_c_te]
+            [model_2_tr, model_3_tr], [model_2_te, model_3_te]
         ]
         training_dict["model_{2,4}"] = [
-            [model_b_tr, model_d_tr], [model_b_te, model_d_te]
+            [model_2_tr, model_4_tr], [model_2_te, model_4_te]
         ]
         training_dict["model_{3,4}"] = [
-            [model_c_tr, model_d_tr], [model_c_te, model_d_te]
+            [model_3_tr, model_4_tr], [model_3_te, model_4_te]
         ]
 
         training_dict["model_{1,2,3}"] = [
-            [model_a_tr, model_b_tr, model_c_tr], [model_a_te, model_b_te, model_c_te]
+            [model_1_tr, model_2_tr, model_3_tr], [model_1_te, model_2_te, model_3_te]
         ]
         training_dict["model_{1,2,4}"] = [
-            [model_a_tr, model_b_tr, model_d_tr], [model_a_te, model_b_te, model_d_te]
+            [model_1_tr, model_2_tr, model_4_tr], [model_1_te, model_2_te, model_4_te]
         ]
         training_dict["model_{1,3,4}"] = [
-            [model_a_tr, model_c_tr, model_d_tr], [model_a_te, model_c_te, model_d_te]
+            [model_1_tr, model_3_tr, model_4_tr], [model_1_te, model_3_te, model_4_te]
         ]
         training_dict["model_{2,3,4}"] = [
-            [model_b_tr, model_c_tr, model_d_tr], [model_b_te, model_c_te, model_d_te]
+            [model_2_tr, model_3_tr, model_4_tr], [model_2_te, model_3_te, model_4_te]
         ]
 
         training_dict["model_{1,2,3,4}"] = [
-            [model_a_tr, model_b_tr, model_c_tr, model_d_tr], [
-                model_a_te, model_b_te, model_c_te, model_d_te]
+            [model_1_tr, model_2_tr, model_3_tr, model_4_tr], [
+                model_1_te, model_2_te, model_3_te, model_4_te]
         ]
 
     return training_dict

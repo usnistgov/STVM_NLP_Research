@@ -115,7 +115,10 @@ def nn(tr_list, imdb_tr_list, te_list, imdb_te_list):
 
     _acc = float(correct_pred)/float(TE_SAMPLE_SIZE)
     #print("Accuracy: ", float(correct_pred)/float(TE_SAMPLE_SIZE))
-    tr_acc = hist.history['acc'][EPOCH-1] * 100.
+    tr_acc = 0.
+    for k, v in hist.history.items():
+        if 'acc' in k:
+            tr_acc = hist.history['accuracy'][EPOCH-1] * 100.
     te_acc = _acc * 100.
     return tr_acc, te_acc, weights
 
