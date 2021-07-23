@@ -44,26 +44,31 @@ The following is an overview of each file and folder in the repository, intended
 <details>
 	<summary>File listing</summary>
 
- - combiners - Contains scripts for training (when applicable) the combiner models and using them to generate predictions on the data; it is possible to use the pre-generated predictions from each model included in the repository and run only these scripts.
-    - SSNet_predictions.py - Runs the combiner scripts from the other three Python files and tests the trained models on the data
-    - SSNet_Neural_Network.py - The neural network combiner; see 2.1 for an in-depth explanation of the model and Table 2 in 3.3.1 for results
-    - SSNet_Bayesian_Decision.py - Bayesian decision rule combiners; section 2.2
-    - SSNet_Heuristic_Hybrid.py - Heuristic hybrid combiner; section 2.3
- - data - Contains `.csv` files with training and testing data for each of the four component models *(which script generates these?)*
- - models - Contains each of the individual models that are integrated by the combiner(s)
-     - train
-         - neg - Negative samples from the dataset
+ - **combiners** - Contains scripts for training (when applicable) the combiner models and using them to generate predictions on the data; it is possible to use the pre-generated predictions from each model included in the repository and run only these scripts.
+    - **SSNet_predictions.py** - Runs the combiner scripts from the other three Python files and tests the trained models on the data
+    - **SSNet_Neural_Network.py** - The neural network combiner; see 2.1 for an in-depth explanation of the model and Table 2 in 3.3.1 for results
+    - **SSNet_Bayesian_Decision.py** - Bayesian decision rule combiners; section 2.2
+    - **SSNet_Heuristic_Hybrid.py** - Heuristic hybrid combiner; section 2.3
+
+
+ - **data** - Contains `.csv` files with training and testing data for each of the four component models *(which script generates these?)*
+
+ - **models** - Contains each of the individual models that are integrated by the combiner(s)
+     - **train**
+         - **neg** - Negative samples from the dataset
              - Text files with names of the form `####_#.txt`; e.g., `437_2.txt` or `7932_4.txt`
-         - pos - Positive samples from the dataset
-     - model_{1_2} - Models 1 and 2; respectively, the bag-of-words basd BowTie model (3.2.1) and the BLSTM model with attention and Glove embeddings (3.2.2)
+         - **pos** - Positive samples from the dataset
+	<br/><br/>
+     - **model_{1_2}** - Models 1 and 2; respectively, the bag-of-words basd BowTie model (3.2.1) and the BLSTM model with attention and Glove embeddings (3.2.2)
          - model_2.h5 - Pre-trained weights for Model 2 (BLSTM with Attention and Glove Embeddings); see section 3.2.2
-     - model_{3,4} - Models 3 and 4; respectively, the pretrained BERT model (3.2.3) and  Universal Sentence Encoder (3.2.4)
+	<br/><br/>
+     - **model_{3,4}** - Models 3 and 4; respectively, the pretrained BERT model (3.2.3) and  Universal Sentence Encoder (3.2.4)
          - use_helpers
          - model_helpers
          - misc-src
              - split-imdb-train-dataset.ipynb
-         - IMDB
-             - helpers
+         - **IMDB**
+             - **helpers**
                  - __init1__.py
                  - imdb_preprocess_functions.py
              - data
