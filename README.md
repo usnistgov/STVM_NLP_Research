@@ -41,6 +41,9 @@ Following is the directory structure:
 
 The following is an overview of each file and folder in the repository, intended to reduce challenges with setup for new users. Where applicable, references to the paper and/or instructions for how to run the experiments are included.
 
+<details>
+	<summary>File listing</summary>
+
  - combiners - Contains scripts for training (when applicable) the combiner models and using them to generate predictions on the data; it is possible to use the pre-generated predictions from each model included in the repository and run only these scripts.
     - SSNet_predictions.py - Runs the combiner scripts from the other three Python files and tests the trained models on the data
     - SSNet_Neural_Network.py - The neural network combiner; see 2.1 for an in-depth explanation of the model and Table 2 in 3.3.1 for results
@@ -71,6 +74,9 @@ The following is an overview of each file and folder in the repository, intended
  - images
  - README.md
  - LICENSE.md
+
+</details>
+
 
 The project consists of five modules: a) Split the dataset b) Training individual model c) Generating prediction from individual models d) Training the combiners e) Generating prediction from the combiner. Follow the below instructions to split the dataset and evaluate the models or combiners:
 * Split train dataset:
