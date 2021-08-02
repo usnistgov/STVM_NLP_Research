@@ -1,7 +1,19 @@
+# This module provides functions to imdb data
+
 import pandas as pd
 from tensorflow.keras.utils import to_categorical
 import tensorflow_hub as hub
 import numpy as np
+import sys
+
+sys.path.append("../model_helpers")
+import model_utils as model_utils
+import importlib
+importlib.reload(model_utils)
+
+# IMDB data location
+imdb_data = '/wrk/hnj9/imdb_data/' + 'imdb_master.csv'
+class_num = 2
 
 
 # Columns to use
@@ -11,9 +23,9 @@ file_column = 'file'
 probability_column = 'prob'
 
 # Read IMDB .csv file, return train and test datasets in Dataframe format after some preprocessing
-def get_imdb_df_data(csv_file):
+def get_imdb_df_data():
     #Read the IMDB dataset into Pandas dataframe. This includes training, test, and unsupervised data. Remove unsupervised data.
-    df_master = pd.read_csv(csv_file)
+    df_master = pd.read_csv(imdb_data)
     df_master = df_master[df_master[label_column] != 'unsup']
     df_master[text_column] = df_master[text_column].str.replace("<br />", " ")
     # Convert labels to class digits
@@ -42,51 +54,34 @@ def get_imdb_df_data(csv_file):
     print (test_class_balance)
     return df_train, df_test
 
+# Generate IMDB training model name depending on run type
+def get_model_name (run_type, output_dir, model_type, split_train_size, epoch_num):
+    model_file_prefix = ''
+    root_name = output_dir + 'model_' + model_type
+    if run_type == 1:
+        model_file_prefix = root_name + '_25000_'
+    if run_type == 2:
+        model_file_prefix = root_name + '_' + str(split_train_size) + '_'
+    if run_type == 3:
+        model_name = root_name +'_'+ 'epoch_' + str(epoch_num) + "_tmp.h5"
+    else:
+        model_name = model_file_prefix + 'epoch_' + str(epoch_num) + ".h5"
+    return model_name, root_name
 
-# Given a dataframe data, create model required fitted data
-def get_fit_data(df, shuffle):
-    df_shuffled = df
-    X_fit = df[text_column]
-    y_fit = to_categorical(df[label_column].values)
-    if shuffle == True:
-        # Shuffle the data
-        df_shuffled = df.sample(frac=1, random_state=0)
-        X_fit = df_shuffled[text_column]
-        y_fit = to_categorical(df_shuffled[label_column].values)
-    return X_fit, y_fit, df_shuffled
-
-# Get a model's performance
-def get_model_performance(model_name, x_test, y_test, BATCH_SIZE):
-    # Load the pretrained nlp_model
-    from tensorflow.keras.models import load_model
-    new_model = load_model(model_name, custom_objects={'KerasLayer':hub.KerasLayer})
-    # Set decimal format
-    np.set_printoptions(formatter={'float': lambda x: "{0:0.4f}".format(x)})
-    prediction_prob = new_model.predict(x_test)
-    results = new_model.evaluate(x_test, y_test, batch_size=BATCH_SIZE)
-    print(results)
-    # Predict on test dataset
-    from sklearn.metrics import classification_report
-    #pred_test = np.argmax(new_model.predict(X_test), axis= 1)
-    pred_test = np.argmax(prediction_prob, axis= 1)
-    print(classification_report(np.argmax(y_test,axis=1), pred_test))
-    return prediction_prob
-
-# Output result to a file
-def output_result(df_data, file_root_name, RUN_TYPE, prediction_prob, SPLIT_TRAIN_SIZE):
-    df_final = pd.DataFrame(df_data)
-    # Get the positive column probabilities
-    np_prob = prediction_prob[:,1]
-    # Add positive column values to the original dataset
-    df_final['prob'] = np_prob
-    # Create .csv file including prediction probability, and the file name where the review is from
-    result_file_name = file_root_name + "_25k.csv"
-    if RUN_TYPE == 2:
-        if SPLIT_TRAIN_SIZE > 0:
-            file_type = "_train_"
-        else:
-            file_type = "_test_"
-        result_file_name = file_root_name + "_split_" + file_type + str(25000 - SPLIT_TRAIN_SIZE) + ".csv"
-    if RUN_TYPE == 3:
-        result_file_name = "tmp_" + file_root_name + ".csv"
-    df_final.to_csv(result_file_name, index=False, columns = ['prob', 'file'], float_format='%.6f')
+# Give a whole dataset, extract specified size of data for testing run. Make sure the data is balanced in classes
+def get_test_run_data(df_train_data, df_test_data, run_size):
+    # Shuffle the dataset to balance classes before getting TESTING run data, which is small enough for quick run
+    df_train = df_train_data.sample(frac=1, random_state=0)[:run_size]
+    df_test = df_test_data.sample(frac=1, random_state=0)[:run_size]
+#     df_test = df_test[:run_size]
+    print("The number of rows and columns in the training dataset is: {}".format(df_train.shape))
+    print("The number of rows and columns in the test dataset is: {}".format(df_test.shape))
+    # Check the test dataset class balance
+    train_class_balance = df_train[label_column].value_counts()
+    print ('Check rain class balance')
+    print (train_class_balance)
+    # Check the test dataset class balance
+    test_class_balance = df_test[label_column].value_counts()
+    print ('Check test class balance')
+    print (test_class_balance)
+    return df_train, df_test
