@@ -38,71 +38,72 @@ iterations = 30 # each iteration takes approx 5-10 mins
 models = ["model_1", "model_2", "model_3", "model_4"]
 SAMPLE_SPLIT = ["5KFold1", "5KFold2", "5KFold3", "5KFold4", "5KFold5"]
 
+base_dir = '../data/'
 
 #train folds
-fold1_5ktr = 'tr_te_5k_fold_1.csv'
-fold2_5ktr = 'tr_te_5k_fold_2.csv'
-fold3_5ktr = 'tr_te_5k_fold_3.csv'
-fold4_5ktr = 'tr_te_5k_fold_4.csv'
-fold5_5ktr = 'tr_te_5k_fold_5.csv'
+fold1_5ktr = base_dir + 'tr_te_5k_fold_1.csv'
+fold2_5ktr = base_dir + 'tr_te_5k_fold_2.csv'
+fold3_5ktr = base_dir + 'tr_te_5k_fold_3.csv'
+fold4_5ktr = base_dir + 'tr_te_5k_fold_4.csv'
+fold5_5ktr = base_dir + 'tr_te_5k_fold_5.csv'
 
 # fold 1 csv files
-model_1_tr_Fold1 = "model_1_fold1_5ktrain.csv"
-model_2_tr_Fold1 = "model_2_fold1_5ktrain.csv"
-model_3_tr_Fold1 = "model_3_fold1_5ktrain.csv"
-model_4_tr_Fold1 = "model_4_fold1_5ktrain.csv"
+model_1_tr_Fold1 = base_dir + "model_1_fold1_5ktrain.csv"
+model_2_tr_Fold1 = base_dir + "model_2_fold1_5ktrain.csv"
+model_3_tr_Fold1 = base_dir + "model_3_fold1_5ktrain.csv"
+model_4_tr_Fold1 = base_dir + "model_4_fold1_5ktrain.csv"
 
-model_1_te_Fold1 = "model_1_fold1_25ktest.csv"
-model_2_te_Fold1 = "model_2_fold1_25ktest.csv"
-model_3_te_Fold1 = "model_3_fold1_25ktest.csv"
-model_4_te_Fold1 = "model_4_fold1_25ktest.csv"
+model_1_te_Fold1 = base_dir + "model_1_fold1_25ktest.csv"
+model_2_te_Fold1 = base_dir + "model_2_fold1_25ktest.csv"
+model_3_te_Fold1 = base_dir + "model_3_fold1_25ktest.csv"
+model_4_te_Fold1 = base_dir + "model_4_fold1_25ktest.csv"
 
 # fold 2 csv files
-model_1_tr_Fold2 = "model_1_fold2_5ktrain.csv"
-model_2_tr_Fold2 = "model_2_fold2_5ktrain.csv"
-model_3_tr_Fold2 = "model_3_fold2_5ktrain.csv"
-model_4_tr_Fold2 = "model_4_fold2_5ktrain.csv"
+model_1_tr_Fold2 = base_dir + "model_1_fold2_5ktrain.csv"
+model_2_tr_Fold2 = base_dir + "model_2_fold2_5ktrain.csv"
+model_3_tr_Fold2 = base_dir + "model_3_fold2_5ktrain.csv"
+model_4_tr_Fold2 = base_dir + "model_4_fold2_5ktrain.csv"
 
-model_1_te_Fold2 = "model_1_fold2_25ktest.csv"
-model_2_te_Fold2 = "model_2_fold2_25ktest.csv"
-model_3_te_Fold2 = "model_3_fold2_25ktest.csv"
-model_4_te_Fold2 = "model_4_fold2_25ktest.csv"
+model_1_te_Fold2 = base_dir + "model_1_fold2_25ktest.csv"
+model_2_te_Fold2 = base_dir + "model_2_fold2_25ktest.csv"
+model_3_te_Fold2 = base_dir + "model_3_fold2_25ktest.csv"
+model_4_te_Fold2 = base_dir + "model_4_fold2_25ktest.csv"
 
 
 # fold 3 csv files
-model_1_tr_Fold3 = "model_1_fold3_5ktrain.csv"
-model_2_tr_Fold3 = "model_2_fold3_5ktrain.csv"
-model_3_tr_Fold3 = "model_3_fold3_5ktrain.csv"
-model_4_tr_Fold3 = "model_4_fold3_5ktrain.csv"
+model_1_tr_Fold3 = base_dir + "model_1_fold3_5ktrain.csv"
+model_2_tr_Fold3 = base_dir + "model_2_fold3_5ktrain.csv"
+model_3_tr_Fold3 = base_dir + "model_3_fold3_5ktrain.csv"
+model_4_tr_Fold3 = base_dir + "model_4_fold3_5ktrain.csv"
 
-model_1_te_Fold3 = "model_1_fold3_25ktest.csv"
-model_2_te_Fold3 = "model_2_fold3_25ktest.csv"
-model_3_te_Fold3 = "model_3_fold3_25ktest.csv"
-model_4_te_Fold3 = "model_4_fold3_25ktest.csv"
+model_1_te_Fold3 = base_dir + "model_1_fold3_25ktest.csv"
+model_2_te_Fold3 = base_dir + "model_2_fold3_25ktest.csv"
+model_3_te_Fold3 = base_dir + "model_3_fold3_25ktest.csv"
+model_4_te_Fold3 = base_dir + "model_4_fold3_25ktest.csv"
 
 
 # fold 4 csv files
-model_1_tr_Fold4 = "model_1_fold4_5ktrain.csv"
-model_2_tr_Fold4 = "model_2_fold4_5ktrain.csv"
-model_3_tr_Fold4 = "model_3_fold4_5ktrain.csv"
-model_4_tr_Fold4 = "model_4_fold4_5ktrain.csv"
+model_1_tr_Fold4 = base_dir + "model_1_fold4_5ktrain.csv"
+model_2_tr_Fold4 = base_dir + "model_2_fold4_5ktrain.csv"
+model_3_tr_Fold4 = base_dir + "model_3_fold4_5ktrain.csv"
+model_4_tr_Fold4 = base_dir + "model_4_fold4_5ktrain.csv"
 
-model_1_te_Fold4 = "model_1_fold4_25ktest.csv"
-model_2_te_Fold4 = "model_2_fold4_25ktest.csv"
-model_3_te_Fold4 = "model_3_fold4_25ktest.csv"
-model_4_te_Fold4 = "model_4_fold4_25ktest.csv"
+model_1_te_Fold4 = base_dir + "model_1_fold4_25ktest.csv"
+model_2_te_Fold4 = base_dir + "model_2_fold4_25ktest.csv"
+model_3_te_Fold4 = base_dir + "model_3_fold4_25ktest.csv"
+model_4_te_Fold4 = base_dir + "model_4_fold4_25ktest.csv"
 
 
 # fold 5 csv files
-model_1_tr_Fold5 = "model_1_fold5_5ktrain.csv"
-model_2_tr_Fold5 = "model_2_fold5_5ktrain.csv"
-model_3_tr_Fold5 = "model_3_fold5_5ktrain.csv"
-model_4_tr_Fold5 = "model_4_fold5_5ktrain.csv"
+model_1_tr_Fold5 = base_dir + "model_1_fold5_5ktrain.csv"
+model_2_tr_Fold5 = base_dir + "model_2_fold5_5ktrain.csv"
+model_3_tr_Fold5 = base_dir + "model_3_fold5_5ktrain.csv"
+model_4_tr_Fold5 = base_dir + "model_4_fold5_5ktrain.csv"
 
-model_1_te_Fold5 = "model_1_fold5_25ktest.csv"
-model_2_te_Fold5 = "model_2_fold5_25ktest.csv"
-model_3_te_Fold5 = "model_3_fold5_25ktest.csv"
-model_4_te_Fold5 = "model_4_fold5_25ktest.csv"
+model_1_te_Fold5 = base_dir + "model_1_fold5_25ktest.csv"
+model_2_te_Fold5 = base_dir + "model_2_fold5_25ktest.csv"
+model_3_te_Fold5 = base_dir + "model_3_fold5_25ktest.csv"
+model_4_te_Fold5 = base_dir + "model_4_fold5_25ktest.csv"
 
 
 def gen_model_combinations(models):
