@@ -18,22 +18,18 @@ SSNet authors and developers:
 ====================================================================================================================
 '''
 
+from keras.optimizers import *
+from keras.layers import Dense, Activation, Input
+from keras.models import Sequential
 import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras.optimizers import *
-from tensorflow.keras.layers import Dense, Activation, Input
-from tensorflow.keras.models import Sequential
-
 
 import numpy as np
 
 EPOCH = 800
 BATCH_SIZE = 512
-L2_ETA = 0.0039
-L2_ETA = [0.0039, 0.041, 0.001]
-L1_ETA = 0.0005
 
-def nn(tr_list, imdb_tr_list, te_list, imdb_te_list):
+
+def dense(tr_list, imdb_tr_list, te_list, imdb_te_list):
     TR_SAMPLE_SIZE = len(imdb_tr_list)
     TR_PROBA = len(tr_list)
 
@@ -41,7 +37,7 @@ def nn(tr_list, imdb_tr_list, te_list, imdb_te_list):
         assert len(tr_list[idx]) == TR_SAMPLE_SIZE, "train mismatch samples"
     
     train_x = np.zeros([TR_SAMPLE_SIZE, TR_PROBA], dtype=np.float64)
-    train_y = np.array([])
+    train_y = list()
 
     for idx in range(TR_SAMPLE_SIZE):
         ll = imdb_tr_list[idx]
@@ -54,13 +50,13 @@ def nn(tr_list, imdb_tr_list, te_list, imdb_te_list):
 
         x_ = np.array(x)
         train_x[idx] = x_
-        train_y = np.append(train_y, label)
+        train_y.append(label)
 
     model = Sequential()
     model.add(Dense(1, activation=None, use_bias=False,
-                    kernel_regularizer=tf.keras.regularizers.l2(L2_ETA[0]),
-#                    kernel_regularizer=tf.keras.regularizers.l1(L1_ETA),
-                    kernel_constraint=tf.keras.constraints.NonNeg(), input_shape=(TR_PROBA,)))
+                    kernel_constraint=tf.keras.constraints.NonNeg(), 
+                    kernel_regularizer=tf.keras.regularizers.l2(0.0039),
+                    input_shape=(TR_PROBA,)))
     model.add(Dense(1, activation="sigmoid"))
 
     #model.summary()
@@ -115,10 +111,7 @@ def nn(tr_list, imdb_tr_list, te_list, imdb_te_list):
 
     _acc = float(correct_pred)/float(TE_SAMPLE_SIZE)
     #print("Accuracy: ", float(correct_pred)/float(TE_SAMPLE_SIZE))
-    tr_acc = 0.
-    for k, v in hist.history.items():
-        if 'acc' in k:
-            tr_acc = hist.history['accuracy'][EPOCH-1] * 100.
+    tr_acc = hist.history['accuracy'][EPOCH-1] * 100.
     te_acc = _acc * 100.
     return tr_acc, te_acc, weights
 
