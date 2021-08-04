@@ -30,6 +30,7 @@ def sorted_files_list(directory):
     train_files_pos = []
     train_files_neg = []
     for filename in os.listdir(directory + "/pos/"):
+#         Ignore operating system/metadata/cache files
         if filename != '.DS_Store':
               train_files_pos.append(filename)
 
@@ -216,6 +217,7 @@ train_x = np.zeros([TRAINING_SAMPLE, 89527], dtype=np.float64)
 validation_y = np.zeros([VALIDATION_SAMPLE, 1], dtype=np.int)
 validation_x = np.zeros([VALIDATION_SAMPLE, 89527], dtype=np.float64)
 
+# Insert the data from the multi-hot encoded array into the train array (for both x and y)
 for index in df_train.index:
     file_name = str(df_train['file'][index])
     label = int(df_train['label'][index])
@@ -227,6 +229,7 @@ for index in df_train.index:
 print(train_x[0])
 print(train_y[0])
 
+# Repeat the above for the validation data
 for index in df_validation.index:
     file_name = str(df_validation['file'][index])
     label = int(df_validation['label'][index])
@@ -235,6 +238,7 @@ for index in df_validation.index:
     validation_x[index] = train_data_mhe[index_in_files_list]
     validation_y[index] = label
 
+# Build the model (Keras layers API); see the paper for information about the model architecture
 model = Sequential()
 
 model.add(Dense(256, activation="relu", kernel_regularizer=keras.regularizers.l2(
@@ -271,6 +275,7 @@ checkpoint = ModelCheckpoint(
     filepath, monitor='val_accuracy', verbose=1, save_best_only=True, mode='max')
 callbacks_list = [checkpoint]
 
+# Train the model with the specified callbacks and save the trained weights
 model.fit(train_x, train_y, validation_data=(validation_x, validation_y),
           epochs=150, batch_size=512,
           shuffle=False, verbose=1, callbacks=callbacks_list)
