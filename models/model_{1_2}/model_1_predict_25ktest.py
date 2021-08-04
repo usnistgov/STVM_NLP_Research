@@ -153,6 +153,8 @@ def lf():
 
 
 list_of_names_of_test_files = lf()
+
+# Print a few file names to verify that the data was split correctly
 print(list_of_names_of_test_files[0])
 print(list_of_names_of_test_files[1])
 
@@ -161,15 +163,19 @@ print(list_of_names_of_test_files[12501])
 print(list_of_names_of_test_files[24999])
 print(len(list_of_names_of_test_files))
 
+# Evaluate the model on the multi-hot encodings
 prediction_results = None
 prediction_results = model.predict(test_data_mhe, verbose=1)
 
 list_of_proba = []
 list_of_file_name = []
 print("predict shape", prediction_results.shape)
+
+# Store a counter of the number of correct predictions over the (test) datset
 correct_pred = 0
 for i in range(SAMPLE_SIZE):
     proba = prediction_results[i][0]
+#     Check if model prediction is correct and update counter accordingly
     if (proba < float(0.5) and i >= 12500) or (proba >= float(0.5) and i < 12500):
         correct_pred = correct_pred + 1
     list_of_proba.append(str(prediction_results[i][0]))
@@ -181,6 +187,7 @@ d_files = {'file': list_of_file_name}
 
 dd = {'prob': list_of_proba, 'file': list_of_file_name}
 
+# Save the model's predictions to a CSV file
 df = pd.DataFrame(dd, index=None)
 df.to_csv('model_a_25ktest.csv', index=False)
 
