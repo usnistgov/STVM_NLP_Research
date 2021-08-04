@@ -11,6 +11,7 @@ import zipfile
 import requests
 import random
 import math
+
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout, Input, LSTM
 from keras.callbacks import ModelCheckpoint
@@ -18,7 +19,8 @@ from keras.optimizers import *
 from keras.layers import BatchNormalization, InputLayer, RepeatVector
 from keras.models import load_model
 
-
+# Load saved weights
+# (if the h5 is not present in this directory, move it there or run the training script to create it)
 model = load_model('model_a_1.h5')
 
 model.summary()

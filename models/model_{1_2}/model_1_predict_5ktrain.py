@@ -5,6 +5,7 @@ from keras.optimizers import *
 from keras.callbacks import ModelCheckpoint
 from keras.layers import Dense, Activation, Dropout, Input, LSTM, Flatten
 from keras.models import Sequential
+
 import math
 import random
 import re
@@ -15,10 +16,12 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow import keras
 import matplotlib
+
 # Use the AGG (Anti-Grain Geometry) backend since we are not displaying figures directly
 matplotlib.use('agg')
 
-
+# Load saved weights
+# (if the h5 is not present in this directory, move it there or run the training script to create it)
 model = load_model('model_a_1.h5')
 
 NUM_WORDS = 0

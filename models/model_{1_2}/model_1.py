@@ -4,6 +4,7 @@ from keras.optimizers import *
 from keras.callbacks import ModelCheckpoint
 from keras.layers import Dense, Activation, Dropout, Input, LSTM, Flatten
 from keras.models import Sequential
+
 import math
 import random
 import re
@@ -14,12 +15,14 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow import keras
 import matplotlib
+
 # Use the AGG (Anti-Grain Geometry) backend since we are not displaying figures directly
 matplotlib.use('agg')
 
-
+# Data preparation variables
 NUM_WORDS = 0
 DISCRIMINATOR_CUTOFF = 5
+# Hyperparameters
 L2_ETA = 0.019
 
 # Load all data in a DataFrame.
@@ -169,6 +172,7 @@ print('Loading the large data set from disk...\n')
 #train_data_full, test_data_full = load_datasets_from_file()
 train_data_full = load_datasets_from_file()
 
+# Get the lists of filenames for the positive and negative sentiment classes, then join them into a combined list
 train_files_list = []
 train_files_pos, train_files_neg = sorted_files_list("../train")
 train_files_list = train_files_pos + train_files_neg
