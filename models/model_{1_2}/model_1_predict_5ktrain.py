@@ -75,6 +75,7 @@ def sorted_files_list(directory):
     return train_files_pos, train_files_neg
 
 
+# This function is reused from the model_1.py script; see that file for more information
 def load_dataset_from_feat(directory, feat_file_name, use_for_predictions=False):
   data = {}
   data['reviews'] = []
@@ -105,6 +106,7 @@ def load_dataset_from_feat(directory, feat_file_name, use_for_predictions=False)
   return pd.DataFrame.from_dict(data)
 
 
+# See note above the load_dataset_from_feat function definition
 def load_datasets_from_file():
     #  dataset = tf.keras.utils.get_file(
   #      fname='aclImdb.tar.gz',
@@ -131,6 +133,7 @@ def load_datasets_from_file():
   return train_data  # , test_data
 
 
+# See note above the load_dataset_from_feat function definition
 def weighted_multi_hot_sequences(sequences):
     print("NUM_WORDS", NUM_WORDS)
     results = np.zeros((len(sequences['reviews']), NUM_WORDS))
