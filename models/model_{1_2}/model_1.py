@@ -73,8 +73,8 @@ def sorted_files_list(directory):
 
 # Loads a feature file and returns a dictionary of its data
 # Takes as arguments:
-# - strings representing the directory and file name of the feature file
-# - a boolean indicating whether to include the sentiment values in the returned dictionary
+# - strings representing the directory and file name of the feature file (bag-of-words representations of the reviews)
+# - a boolean indicating whether to include the sentiment values in the returned dictionary (a value of False *will* include them)
 def load_dataset_from_feat(directory, feat_file_name, use_for_predictions=False):
   data = {}
   data['reviews'] = []
@@ -84,6 +84,7 @@ def load_dataset_from_feat(directory, feat_file_name, use_for_predictions=False)
   if not use_for_predictions:
     data['sentiments'] = []
 
+#   Open the feature file and load its lines (each review is on a separate line)
   with open(os.path.join(directory, feat_file_name), 'r') as f:
     imdb_encoded_content = f.readlines()
     #if not use_for_predictions:
@@ -93,13 +94,16 @@ def load_dataset_from_feat(directory, feat_file_name, use_for_predictions=False)
     #print(imdb_encoded_content)
     print("************************************")
     review_encoding = []
+#     Loop through bag-of-words encoding of each review's vocabulary
     for review in imdb_encoded_content:
+#       Split on whitespace (e.g., "0:6 1:11 2:4 3:5 ..." becomes ["0:6", "1:11", "2:4", "3:5", ...])
       review_encoding = review.split()
       if not use_for_predictions:
         if int(review_encoding[0]) > DISCRIMINATOR_CUTOFF:
           data['sentiments'].append(1)
         else:
           data['sentiments'].append(0)
+#       Remove label from the list of frequencies (first element in each line/review)
       review_encoding.pop(0)
       data['reviews'].append(review_encoding)
   return pd.DataFrame.from_dict(data)
