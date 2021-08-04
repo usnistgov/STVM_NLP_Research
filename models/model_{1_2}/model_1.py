@@ -109,6 +109,7 @@ def load_dataset_from_feat(directory, feat_file_name, use_for_predictions=False)
   return pd.DataFrame.from_dict(data)
 
 
+# Loads the dataset and prints information about the vocabulary
 def load_datasets_from_file():
     #  dataset = tf.keras.utils.get_file(
   #      fname='aclImdb.tar.gz',
@@ -177,30 +178,39 @@ print(train_files_list[0])
 print(train_files_list[1])
 
 
+# Get the first 25000 samples from the loaded dataset
 train_data = train_data_full[:][0:25000]
 
 print(train_data.head())
 print(train_data['reviews'].iloc[0])
 
+# Create multi-hot encoded array for the training data samples
+# (note that this will be a 2D array with axis 0 being the reviews/batch dimension and axis 1 being the encoded vocabulary (combined frequency/polarity scores))
 train_data_mhe = weighted_multi_hot_sequences(train_data)
 print(train_data_mhe.shape)
 
 print(train_data_mhe[0])
 print(len(train_data_mhe[0]))
 
+# Number of training and validation samples
 TRAINING_SAMPLE = 20000
 VALIDATION_SAMPLE = 5000
 df_train = pd.read_csv('imdb_train_20k.csv')
 df_validation = pd.read_csv('imdb_train_5k.csv')
 SAMPLE_SIZE_TRD = len(df_train)
 SAMPLE_SIZE_VLD = len(df_validation)
+# Preview the training data
 print(df_train.head())
 
+# Ensures the number of samples in both of the csv files (tables) match the expected numbers
 assert SAMPLE_SIZE_TRD == TRAINING_SAMPLE, 'training sample not complete....'
 assert SAMPLE_SIZE_VLD == VALIDATION_SAMPLE, 'validation sample not complete....'
 
+# Shuffle the training data DataFrame
 df_train = df_train.sample(frac=1)
 
+# Create the actual arrays that the model will be trained on
+# [train/validation]_x are the multi-hot encodings (floats), [train/validation]_y are the binary sentiment classifications (ints)
 train_y = np.zeros([TRAINING_SAMPLE, 1], dtype=np.int)
 train_x = np.zeros([TRAINING_SAMPLE, 89527], dtype=np.float64)
 validation_y = np.zeros([VALIDATION_SAMPLE, 1], dtype=np.int)
