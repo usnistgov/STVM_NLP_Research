@@ -131,23 +131,30 @@ def load_datasets_from_file():
 # Note that this typically creates a very large array (several gigabytes) and the script may crash if not enough memory is available to allocate
 def weighted_multi_hot_sequences(sequences):
     print("NUM_WORDS", NUM_WORDS)
+#     Create base matrix
     results = np.zeros((len(sequences['reviews']), NUM_WORDS))
+#     Load vocabulary word polarity values
     with open(os.path.join('..', 'imdbEr.txt'), 'r') as f:
         imdb_word_polarity = f.readlines()
 
+#     Initialize variables to store summary statistics
     max = 0.0
     min = 0.0
+#     Loop through each review -> each word in the review (i.e., each unique word in the bag-of-words data)
     for review_index, review in enumerate(sequences['reviews']):
       for word in review:
         word_index, word_count = word.split(':')
+#         Compute a cumulative polarity score that combines the pre-generated word polarities with their frequencies in a given review
         cumulative_polarity = int(word_count) * \
             float(imdb_word_polarity[int(word_index)])
+#         Set the value in the matrix
         results[review_index, int(word_index)] = cumulative_polarity
-        #accumulate statistics for the dataset
+        # Accumulate statistics for the dataset
         if cumulative_polarity > max:
           max = cumulative_polarity
         elif cumulative_polarity < min:
           min = cumulative_polarity
+#     Display the lowest and highest cumulative polarity scores
     print('Dataset encoding stats: MIN = %f, MAX = %f\n' % (min, max))
     return results
 
