@@ -121,7 +121,10 @@ def load_datasets_from_file():
   #    os.path.join('..', 'test'), 'labeledBow.feat')
   return train_data  # , test_data
 
-
+# Given a dictionary containing a list of reviews from the dataset (with the key 'reviews'):
+# Generate a matrix (dense NumPy array) of multi-hot encoded vectors for each review in the dataset
+# Resulting matrix dimensions are [number of reviews] by [number of words in vocabulary]
+# Note that this typically creates a very large array (several gigabytes) and the script may crash if not enough memory is available to allocate
 def weighted_multi_hot_sequences(sequences):
     print("NUM_WORDS", NUM_WORDS)
     results = np.zeros((len(sequences['reviews']), NUM_WORDS))
