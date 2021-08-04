@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow import keras
 import matplotlib
+# Use the AGG (Anti-Grain Geometry) backend since we are not displaying figures directly
 matplotlib.use('agg')
 
 
