@@ -70,7 +70,10 @@ def sorted_files_list(directory):
 
     return train_files_pos, train_files_neg
 
-
+# Loads a feature file and returns a dictionary of its data
+# Takes as arguments:
+# - strings representing the directory and file name of the feature file
+# - a boolean indicating whether to include the sentiment values in the returned dictionary
 def load_dataset_from_feat(directory, feat_file_name, use_for_predictions=False):
   data = {}
   data['reviews'] = []
