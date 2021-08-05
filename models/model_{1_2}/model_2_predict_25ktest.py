@@ -57,6 +57,7 @@ glove_file = "glove.6B.zip"
 EMBEDDING_SIZE = 100
 
 
+# This function is reused from model_2.py; refer to that script for more information
 def download(url_):
     if not os.path.exists(glove_file):
         print("downloading glove embedding .....")
@@ -68,6 +69,7 @@ def download(url_):
             z.extractall()
 
 
+# See the note above the download function
 def load_glove():
     with open("glove.6B.100d.txt", 'r') as glove_vectors:
         word_to_int = defaultdict(int)
@@ -103,6 +105,7 @@ def get_sanitized_reviews(list_of_file_paths, of_type):
             list_of_test_reviews.append(review)
 
 
+# See the note above the download function
 def encode_reviews(revs):
     test_data = []
     for review in revs:
@@ -121,6 +124,7 @@ print('list_of_names_of_test_files: ', list_of_names_of_test_files[0])
 MAX_REVIEW_LEN = 1200
 
 
+# See the note above the download function
 def zero_pad_reviews(revs):
     _data_padded = []
     for review in revs:
@@ -134,6 +138,7 @@ def zero_pad_reviews(revs):
 predict_reviews = zero_pad_reviews(predict_reviews)
 
 
+# See the note above the download function
 def review_ints_to_vecs(train_reviews):
     train_data = []
     for review in train_reviews:
