@@ -22,10 +22,17 @@ import requests
 import re
 
 
+# Model training settings
+# - Number of samples
 TRAINING_SAMPLE = 20000
 VALIDATION_SAMPLE = 5000
-EMBEDDING_SIZE = 100
+# - Length to pad reviews to before training
 MAX_REVIEW_LEN = 800
+
+# Hyperparameters
+# - Size of word embedding vectors
+EMBEDDING_SIZE = 100
+# - Number of units in each bidirectional LSTM layer
 BLSTM_UNITS = 64
 
 train_csv_file = 'imdb_train_20k.csv'
