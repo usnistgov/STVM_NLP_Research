@@ -35,15 +35,19 @@ EMBEDDING_SIZE = 100
 # - Number of units in each bidirectional LSTM layer
 BLSTM_UNITS = 64
 
+# CSV files containing the training and testing datasets
 train_csv_file = 'imdb_train_20k.csv'
 val_csv_file = "imdb_train_5k.csv"
 
+# Create NumPy arrays to store the encoded training data
 train_y = np.zeros([TRAINING_SAMPLE, 1], dtype=np.int)
 val_y = np.zeros([VALIDATION_SAMPLE, 1], dtype=np.int)
 
 list_of_train_reviews = list()
 list_of_validation_reviews = list()
 
+# Name of compressed file containing word embeddings
+# If not already downloaded, this is the (relative) path the embeddings will be downloaded to
 glove_file = "glove.6B.zip"
 
 
