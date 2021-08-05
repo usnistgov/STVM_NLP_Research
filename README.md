@@ -30,12 +30,58 @@ Check our research paper ["Can you tell? SSNet - a Sagittal Stratum-inspired Neu
 
 ## Prototype code, see the [licensing agreement](https://github.com/usnistgov/STVM_NLP_Research/blob/master/LICENSE.md) for terms of use.
 
-## Installation Process: 
-The project is written using the [tensorflow](https://www.tensorflow.org/install) library and is compatible with tensorflow 2.x. The dataset used for the experiments can be found at [SLMRD](https://ai.stanford.edu/~amaas/data/sentiment/) which consists of 25K train reviews and 25K test reviews.
+## Installation Process:
+The project is written using the [TensorFlow](https://www.tensorflow.org/install) library and is compatible with TensorFlow 2.x. The dataset used for the experiments can be found at [SLMRD](https://ai.stanford.edu/~amaas/data/sentiment/) which consists of 25K train reviews and 25K test reviews.
+
+The data is downloadable as a `.tar.gz` file which contains text files sorted into positive and negative reviews as well as metadata. For the training and inference code to run properly, `imdb.vocab` should be copied to the `./models` folder (relative to the repository's main directory). If a folder named `train` does not exist in the `models` directory, it will need to be created; then, copy `labeledBow.feat` from the dataset into the `train` folder. Also copy (or move) the `train/neg` and `train/pos` folders from the downloaded data into `train`. This will enable the `model_1...` and `model_2...` scripts to access the training and testing data. Additional preparation may be necessary before training the models or using them to make predictions on the data; see below.
 
 ## WorkFlow of SSNet
 Following is the directory structure:
 <img src="images/directory_structure.png" height="20">
+
+The following is an overview of each file and folder in the repository, intended to reduce challenges with setup for new users. Where applicable, references to the paper and/or instructions for how to run the experiments are included.
+
+<details>
+	<summary>File listing</summary>
+
+ - **combiners** - Contains scripts for training (when applicable) the combiner models and using them to generate predictions on the data; it is possible to use the pre-generated predictions from each model included in the repository and run only these scripts.
+    - **SSNet_predictions.py** - Runs the combiner scripts from the other three Python files and tests the trained models on the data
+    - **SSNet_Neural_Network.py** - The neural network combiner; see 2.1 for an in-depth explanation of the model and Table 2 in 3.3.1 for results
+    - **SSNet_Bayesian_Decision.py** - Bayesian decision rule combiners; section 2.2
+    - **SSNet_Heuristic_Hybrid.py** - Heuristic hybrid combiner; section 2.3
+
+
+ - **data** - Contains `.csv` files with training and testing data for each of the four component models *(which script generates these?)*
+
+ - **models** - Contains each of the individual models that are integrated by the combiner(s)
+     - **train**
+         - **neg** - Negative samples from the dataset
+             - Text files with names of the form `####_#.txt`; e.g., `437_2.txt` or `7932_4.txt`
+         - **pos** - Positive samples from the dataset
+	<br/><br/>
+     - **model_{1_2}** - Models 1 and 2; respectively, the bag-of-words basd BowTie model (3.2.1) and the BLSTM model with attention and Glove embeddings (3.2.2)
+         - model_2.h5 - Pre-trained weights for Model 2 (BLSTM with Attention and Glove Embeddings); see section 3.2.2
+	<br/><br/>
+     - **model_{3,4}** - Models 3 and 4; respectively, the pretrained BERT model (3.2.3) and  Universal Sentence Encoder (3.2.4)
+         - use_helpers
+         - model_helpers
+         - misc-src
+             - split-imdb-train-dataset.ipynb
+         - **IMDB**
+             - **helpers**
+                 - __init1__.py
+                 - imdb_preprocess_functions.py
+             - data
+             - model_4_use.ipynb
+             - model_3_bert.ipynb
+         - bert_helpers
+ - test
+ - images
+ - README.md
+ - LICENSE.md
+
+</details>
+
 
 The project consists of five modules: a) Split the dataset b) Training individual model c) Generating prediction from individual models d) Training the combiners e) Generating prediction from the combiner. Follow the below instructions to split the dataset and evaluate the models or combiners:
 * Split train dataset:
