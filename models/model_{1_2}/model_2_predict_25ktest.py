@@ -92,6 +92,10 @@ word_to_int, int_to_vec = load_glove()
 list_of_test_reviews = []
 
 
+# Load text data (reviews) from a list of file paths;
+# run preprocessing/cleaning filters on each sample
+# This function reuses filters from create_training_sample in model_2.py;
+# refer to that script for more information
 def get_sanitized_reviews(list_of_file_paths, of_type):
     for i in range(len(list_of_file_paths)):
         file_path = list_of_file_paths[i]
