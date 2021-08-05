@@ -5,6 +5,7 @@ from keras.optimizers import *
 from keras.callbacks import ModelCheckpoint
 from keras.layers import Dense, Activation, Dropout, Input, LSTM, Flatten
 from keras.models import Sequential
+
 import math
 import random
 import re
@@ -15,9 +16,12 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow import keras
 import matplotlib
+
+# Use the AGG (Anti-Grain Geometry) backend since we are not displaying figures directly
 matplotlib.use('agg')
 
-
+# Load saved weights
+# (if the h5 is not present in this directory, move it there or run the training script to create it)
 model = load_model('model_a_1.h5')
 
 NUM_WORDS = 0
@@ -74,6 +78,7 @@ def sorted_files_list(directory):
     return train_files_pos, train_files_neg
 
 
+# This function is reused from the model_1.py script; see that file for more information
 def load_dataset_from_feat(directory, feat_file_name, use_for_predictions=False):
   data = {}
   data['reviews'] = []
@@ -104,6 +109,7 @@ def load_dataset_from_feat(directory, feat_file_name, use_for_predictions=False)
   return pd.DataFrame.from_dict(data)
 
 
+# See note above the load_dataset_from_feat function definition
 def load_datasets_from_file():
     #  dataset = tf.keras.utils.get_file(
   #      fname='aclImdb.tar.gz',
@@ -130,6 +136,7 @@ def load_datasets_from_file():
   return train_data  # , test_data
 
 
+# See note above the load_dataset_from_feat function definition
 def weighted_multi_hot_sequences(sequences):
     print("NUM_WORDS", NUM_WORDS)
     results = np.zeros((len(sequences['reviews']), NUM_WORDS))
@@ -202,15 +209,19 @@ print(train_y[0])
 
 model.summary()
 
+# Evaluate the model on the multi-hot encodings
 prediction_results = None
 prediction_results = model.predict(train_x, verbose=1)
 
 list_of_proba = []
 list_of_file_name = []
 print("predict shape", prediction_results.shape)
+
+# Store a counter of the number of correct predictions over the (test) datset
 correct_pred = 0
 for i in range(SAMPLE_SIZE):
     proba = prediction_results[i][0]
+#     Check if model prediction is correct and update counter accordingly
     if (proba < float(0.5) and train_y[i] == 0) or (proba >= float(0.5) and train_y[i] == 1):
         correct_pred = correct_pred + 1
     list_of_proba.append(str(prediction_results[i][0]))
@@ -225,5 +236,6 @@ d_files = {'file': list_of_file_name}
 
 dd = {'prob': list_of_proba, 'file': list_of_file_name}
 
+# Save the model's predictions to a CSV file
 df = pd.DataFrame(dd, index=None)
 df.to_csv('model_a_5ktrain.csv', index=False)

@@ -11,6 +11,7 @@ import zipfile
 import requests
 import random
 import math
+
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout, Input, LSTM
 from keras.callbacks import ModelCheckpoint
@@ -18,7 +19,8 @@ from keras.optimizers import *
 from keras.layers import BatchNormalization, InputLayer, RepeatVector
 from keras.models import load_model
 
-
+# Load saved weights
+# (if the h5 is not present in this directory, move it there or run the training script to create it)
 model = load_model('model_a_1.h5')
 
 model.summary()
@@ -28,6 +30,7 @@ DISCRIMINATOR_CUTOFF = 5
 SAMPLE_SIZE = 25000
 
 
+# This function is reused from the model_1.py script; see that file for more information
 def load_dataset_from_feat(directory, feat_file_name, use_for_predictions=False):
   data = {}
   data['reviews'] = []
@@ -52,6 +55,7 @@ def load_dataset_from_feat(directory, feat_file_name, use_for_predictions=False)
   return pd.DataFrame.from_dict(data)
 
 
+# See note above the load_dataset_from_feat function definition
 def load_datasets_from_file():
     #  dataset = tf.keras.utils.get_file(
   #      fname='aclImdb.tar.gz',
@@ -78,6 +82,7 @@ def load_datasets_from_file():
   return train_data, test_data
 
 
+# See note above the load_dataset_from_feat function definition
 def weighted_multi_hot_sequences(sequences):
     print("NUM_WORDS", NUM_WORDS)
     results = np.zeros((len(sequences['reviews']), NUM_WORDS))
@@ -150,6 +155,8 @@ def lf():
 
 
 list_of_names_of_test_files = lf()
+
+# Print a few file names to verify that the data was split correctly
 print(list_of_names_of_test_files[0])
 print(list_of_names_of_test_files[1])
 
@@ -158,15 +165,19 @@ print(list_of_names_of_test_files[12501])
 print(list_of_names_of_test_files[24999])
 print(len(list_of_names_of_test_files))
 
+# Evaluate the model on the multi-hot encodings
 prediction_results = None
 prediction_results = model.predict(test_data_mhe, verbose=1)
 
 list_of_proba = []
 list_of_file_name = []
 print("predict shape", prediction_results.shape)
+
+# Store a counter of the number of correct predictions over the (test) datset
 correct_pred = 0
 for i in range(SAMPLE_SIZE):
     proba = prediction_results[i][0]
+#     Check if model prediction is correct and update counter accordingly
     if (proba < float(0.5) and i >= 12500) or (proba >= float(0.5) and i < 12500):
         correct_pred = correct_pred + 1
     list_of_proba.append(str(prediction_results[i][0]))
@@ -178,6 +189,7 @@ d_files = {'file': list_of_file_name}
 
 dd = {'prob': list_of_proba, 'file': list_of_file_name}
 
+# Save the model's predictions to a CSV file
 df = pd.DataFrame(dd, index=None)
 df.to_csv('model_a_25ktest.csv', index=False)
 
