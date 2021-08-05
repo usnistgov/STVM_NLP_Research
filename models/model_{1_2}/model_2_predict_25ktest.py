@@ -29,11 +29,14 @@ SAMPLE_SIZE = 25000
 omit_files = [".DS_Store"]
 
 
+# Get a list of the file names of the text files containing the reviews in the testing data
 def list_of_test_files():
     sample_dir_list = ['../test/pos/', '../test/neg/']
     list_of_names_of_test_files = []
+#     Loop through sub-directories in sample_dir_list
     for sample_list_index in range(len(sample_dir_list)):
         for file in os.listdir(sample_dir_list[sample_list_index]):
+#             Add the (relative) file path to the list
             if file not in omit_files:
                 list_of_names_of_test_files.append(
                     sample_dir_list[sample_list_index] + file)
