@@ -124,6 +124,7 @@ def encode_reviews(revs):
     return test_data
 
 
+# Load data and run filtering functions
 get_sanitized_reviews(list_of_names_of_test_files, "test")
 print(list_of_test_reviews[0])
 
@@ -158,6 +159,7 @@ def review_ints_to_vecs(train_reviews):
     return train_data
 
 
+# Prepare the data for generating predictions with the trained model
 predict_reviews = np.array(review_ints_to_vecs(predict_reviews))
 print(predict_reviews.shape)
 

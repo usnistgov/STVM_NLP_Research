@@ -22,6 +22,7 @@ import re
 from keras.models import load_model
 
 
+# Load weights of trained model from disk
 model = load_model('model_b_2.h5')
 
 TRAINING_SAMPLE = 5000
@@ -148,6 +149,9 @@ def review_ints_to_vecs(train_reviews):
         train_data.append(vec_review)
     return train_data
 
+
+# The prediction/inference routine here is very similar to the analogous code in model_2_predict_25ktest.py;
+# refer to that script for details about generating predictions, calculating model accuracy, etc.
 
 train_reviews = np.array(review_ints_to_vecs(train_reviews))
 print(train_reviews.shape)
