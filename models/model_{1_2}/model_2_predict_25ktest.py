@@ -172,13 +172,18 @@ for i in range(SAMPLE_SIZE):
     list_of_proba.append(str(prediction_results[i][0]))
     list_of_file_name.append(list_of_names_of_test_files[i].split('/')[-1])
 
+# Calculate and display accuracy
 print("Accuracy: ", float(correct_pred)/float(25000))
 
 d_prob = {'prob': list_of_proba}
 d_files = {'file': list_of_file_name}
 
+# Create a dictionary containing;
+# - the probabilities (model predictions) for each sample in the dataset
+# - the names of the files containing the reviews corresponding to these probabilities
 dd = {'prob': list_of_proba, 'file': list_of_file_name}
 
+# Convert predictions to a DataFrame, then save to local CSV file
 df = pd.DataFrame(dd, index=None)
 df.to_csv('model_b_2_25ktest.csv', index=False)
 
