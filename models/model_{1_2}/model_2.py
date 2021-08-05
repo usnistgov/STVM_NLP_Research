@@ -40,6 +40,7 @@ list_of_validation_reviews = list()
 glove_file = "glove.6B.zip"
 
 
+# Download GloVe word embeddings and extract from the zip file if necessary
 def download(url_):
     if not os.path.exists(glove_file):
         print("downloading glove embedding .....")
@@ -51,6 +52,7 @@ def download(url_):
             z.extractall()
 
 
+# Load word embeddings and indices (returns 2 arrays)
 def load_glove():
     with open("glove.6B.100d.txt", 'r') as glove_vectors:
         word_to_int = defaultdict(int)
@@ -77,6 +79,7 @@ list_of_y = list()
 #list_of_filename_val = list()
 list_of_y_val = list()
 
+# Process data and generate training sample
 def create_training_sample(filename, if_train):
     df_train = pd.read_csv(filename)
     SAMPLE_SIZE = len(df_train)
@@ -108,6 +111,7 @@ def create_training_sample(filename, if_train):
             list_of_y_val.append(label)
 
 
+# Get index of each review in dataset
 def encode_reviews(revs):
     train_data = []
     for review in revs:
@@ -133,6 +137,7 @@ val_reviews = encode_reviews(list_of_validation_reviews)
 print(train_reviews[0])
 print(val_reviews[0])
 
+# Pad each sample to the same length
 def zero_pad_reviews(revs):
     _data_padded = []
     for review in revs:
@@ -146,6 +151,7 @@ def zero_pad_reviews(revs):
 train_reviews = zero_pad_reviews(train_reviews)
 val_reviews = zero_pad_reviews(val_reviews)
 
+# Get the word embeddings corresponding to the content of each review
 def review_ints_to_vecs(train_reviews):
     train_data = []
     for review in train_reviews:
