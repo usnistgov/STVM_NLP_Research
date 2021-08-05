@@ -42,10 +42,13 @@ glove_file = "glove.6B.zip"
 
 # Download GloVe word embeddings and extract from the zip file if necessary
 def download(url_):
+#     If the zip file containing the embeddings has not been downloaded, do so
     if not os.path.exists(glove_file):
         print("downloading glove embedding .....")
         r = requests.get(url_, glove_file)
     glove_filename = "glove.6B.{}d.txt".format(EMBEDDING_SIZE)
+#     Check if the relevant embeddings have been extracted from the archive;
+#     if not, unzip the embeddings into the same directory
     if not os.path.exists(glove_filename) and EMBEDDING_SIZE in [50, 100, 200, 300]:
         print("extract glove embeddings ...")
         with zipfile.ZipFile(glove_file, 'r') as z:
