@@ -179,6 +179,7 @@ print(train_reviews.shape, train_y.shape)
 print(val_reviews.shape, val_y.shape)
 
 
+# Build the model (see the paper for architecture details)
 input1 = Input(shape=(MAX_REVIEW_LEN, EMBEDDING_SIZE))
 model_lstm = Bidirectional(LSTM(
     BLSTM_UNITS, dropout=0.2, recurrent_dropout=0.4, return_sequences=True))(input1)
@@ -186,6 +187,7 @@ model_lstm = Bidirectional(LSTM(
 model_lstmNB = Bidirectional(LSTM(
     BLSTM_UNITS, dropout=0.2, recurrent_dropout=0.4, return_sequences=True))(model_lstm)
 
+# Attention layers
 model_attention = Dense(1, activation="tanh")(model_lstm)
 model_attention = Flatten()(model_attention)
 model_attention = Activation("softmax")(model_attention)
@@ -205,13 +207,16 @@ model.compile(optimizer='adam', loss='binary_crossentropy',
               metrics=['accuracy', 'binary_crossentropy'])
 
 
+# Local file to save model checkpoints to
 filepath = "model_2.h5"
 checkpoint = tf.keras.callbacks.ModelCheckpoint(
     filepath, monitor='val_accuracy', verbose=1, save_best_only=True, mode='max')
 callbacks_list = [checkpoint]
 
 
+# Train model
 model.fit(train_reviews, train_y, validation_data=(val_reviews, val_y),
             epochs=200, batch_size=512, verbose=1, callbacks=callbacks_list)
+# Saved trained weights to disk
 model.save(filepath)
 
