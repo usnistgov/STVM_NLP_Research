@@ -19,8 +19,10 @@ from keras.layers import BatchNormalization, InputLayer, RepeatVector
 from keras.models import load_model
 
 
+# Load weights of trained model from disk
 model = load_model('model_b_2.h5')
 
+# Print summary of model architecture/number of parameters in each layer
 model.summary()
 
 
@@ -154,8 +156,10 @@ def review_ints_to_vecs(train_reviews):
 predict_reviews = np.array(review_ints_to_vecs(predict_reviews))
 print(predict_reviews.shape)
 
+# Evaluate the model on the testing data
 prediction_results = None
 prediction_results = model.predict(predict_reviews, verbose=1)
+
 #prediction_results = model.predict_proba(predict_reviews, verbose=1)
 #print(prediction_results)
 #print(prediction_results[0][0])
@@ -164,6 +168,9 @@ list_of_proba = []
 list_of_file_name = []
 print("predict shape", prediction_results.shape)
 correct_pred = 0
+# Loop through samples and generated predictions;
+# count the number of correct predictions for accuracy evaluation...
+# ...and store the model's polarity prediction for each review
 for i in range(SAMPLE_SIZE):
     proba = prediction_results[i][0]
     if (proba < float(0.5) and 'neg' in list_of_names_of_test_files[i]) or (proba >= float(0.5) and 'pos' in list_of_names_of_test_files[i]):
