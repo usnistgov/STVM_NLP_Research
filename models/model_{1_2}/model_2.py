@@ -81,28 +81,37 @@ list_of_y_val = list()
 
 # Process data and generate training sample
 def create_training_sample(filename, if_train):
+#     Load samples from CSV file
     df_train = pd.read_csv(filename)
     SAMPLE_SIZE = len(df_train)
+#     Check that number of samples in dataset (i.e., DataFrame loaded from `filename`) is correct
     if if_train:
         assert SAMPLE_SIZE == TRAINING_SAMPLE, 'training sample not complete....'
     else:
         assert SAMPLE_SIZE == VALIDATION_SAMPLE, 'validation sample not complete....'
 
     if if_train:
+#         Shuffle training data
         df_train = df_train.sample(frac=1)
 
+#     Loop through reviews in dataset
     for index in df_train.index:
         review = str(df_train['review'][index])
         label = int(df_train['label'][index])
         #list_of_filename.append(df_train['file'][index])
         review = review.lower()
         
+#         Remove newline tags
         review = review.replace("<br />", " ")
+#         Replace characters other than letters and spaces with whitespace
         review = re.sub(r"[^a-z ]", " ", review)
+#         Remove consecutive spaces in review
         review = re.sub(r" +", " ", review)
 
+#         Split review string into words
         review = review.split(" ")
 
+#         Add the review and label to the relevant lists
         if if_train:
             list_of_train_reviews.append(review)
             list_of_y.append(label)
