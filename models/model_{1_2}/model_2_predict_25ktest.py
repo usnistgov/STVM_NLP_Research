@@ -26,8 +26,10 @@ model = load_model('model_b_2.h5')
 model.summary()
 
 
+# Number of test samples to evaluate the model on
 SAMPLE_SIZE = 25000
 
+# List of file names to ignore when loading data
 omit_files = [".DS_Store"]
 
 
@@ -55,6 +57,8 @@ assert len(list_of_names_of_test_files) == SAMPLE_SIZE
 #random.shuffle(list_of_names_of_train_files)
 
 
+# Name of compressed file containing word embeddings
+# If not already downloaded, this is the (relative) path the embeddings will be downloaded to
 glove_file = "glove.6B.zip"
 EMBEDDING_SIZE = 100
 
@@ -127,6 +131,7 @@ predict_reviews = encode_reviews(list_of_test_reviews)
 print(predict_reviews[0])
 print('list_of_names_of_test_files: ', list_of_names_of_test_files[0])
 
+# Length to pad reviews to before running model
 MAX_REVIEW_LEN = 1200
 
 
