@@ -72,6 +72,9 @@ list_of_filename = list()
 list_of_y = list()
 
 
+# Load text data from a local file and run preprocessing/cleaning filters
+# This function reuses filters from create_training_sample in model_2.py;
+# refer to that script for more information
 def create_training_sample(filename):
     df_train = pd.read_csv(train_csv_file)
     SAMPLE_SIZE = len(df_train)
@@ -104,6 +107,7 @@ def create_training_sample(filename):
         #train_y[index] = label
 
 
+# See this function's documentation in model_2.py for more information
 def encode_reviews(revs):
     train_data = []
     for review in revs:
@@ -127,7 +131,7 @@ print(train_reviews[0])
 MAX_REVIEW_LEN = 1200
 
 
-# See the note above the download function
+# See this function's documentation in model_2.py for more information
 def zero_pad_reviews(revs):
     _data_padded = []
     for review in revs:
@@ -141,7 +145,7 @@ def zero_pad_reviews(revs):
 train_reviews = zero_pad_reviews(train_reviews)
 
 
-# See the note above the download function
+# See this function's documentation in model_2.py for more information
 def review_ints_to_vecs(train_reviews):
     train_data = []
     for review in train_reviews:
