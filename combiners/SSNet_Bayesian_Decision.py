@@ -99,9 +99,9 @@ def mj2(x, y, p, resolve):
 
         if x_proba.index(max(x_proba)) == y_proba.index(max(y_proba)):
             if x_proba.index(max(x_proba)) == label:
-                correct_pred = correct_pred + 1
+                correct_pred += 1
             else:
-                wrong_pred = wrong_pred + 1
+                wrong_pred += 1
         else:
             for func_name, resolve_func in [('max', _max), ('avg', _avg), ('sum', _sum)]:
                 if resolve == func_name:
@@ -138,9 +138,9 @@ def mj3(x, y, z, p, resolve):
             max_idx = ll[_max_item_index].index(max(ll[_max_item_index]))
             
             if max_idx == label:
-                correct_pred = correct_pred + 1
+                correct_pred += 1
             else:
-                wrong_pred = wrong_pred + 1
+                wrong_pred += 1
 
         if resolve == 'avg':
             p0 = (x_proba[0] + y_proba[0] + z_proba[0]) / 3.
@@ -148,9 +148,9 @@ def mj3(x, y, z, p, resolve):
             ll = [p0, p1]
             avg_idx = ll.index(max(ll))
             if avg_idx == label:
-                correct_pred = correct_pred + 1
+                correct_pred += 1
             else:
-                wrong_pred = wrong_pred + 1
+                wrong_pred += 1
         
         if resolve == 'sum':
             p0 = (x_proba[0] + y_proba[0] + z_proba[0])
@@ -158,9 +158,9 @@ def mj3(x, y, z, p, resolve):
             ll = [p0, p1]
             avg_idx = ll.index(max(ll))
             if avg_idx == label:
-                correct_pred = correct_pred + 1
+                correct_pred += 1
             else:
-                wrong_pred = wrong_pred + 1
+                wrong_pred += 1
         
         if resolve == 'maj':
             ix = x_proba.index(max(x_proba))
@@ -169,25 +169,25 @@ def mj3(x, y, z, p, resolve):
             
             if ix == iy == iz:
                 if ix == label:
-                    correct_pred = correct_pred + 1
+                    correct_pred += 1
                 else:
-                    wrong_pred = wrong_pred + 1
+                    wrong_pred += 1
             else:
                 if ix == iy:
                     if ix == label:
-                        correct_pred = correct_pred + 1
+                        correct_pred += 1
                     else:
-                        wrong_pred = wrong_pred + 1
+                        wrong_pred += 1
                 if ix == iz:
                     if ix == label:
-                        correct_pred = correct_pred + 1
+                        correct_pred += 1
                     else:
-                        wrong_pred = wrong_pred + 1
+                        wrong_pred += 1
                 if iy == iz:
                     if iy == label:
-                        correct_pred = correct_pred + 1
+                        correct_pred += 1
                     else:
-                        wrong_pred = wrong_pred + 1
+                        wrong_pred += 1
         
 
     assert correct_pred + wrong_pred == len(p), "length mismatch"
@@ -209,9 +209,9 @@ def mj4(x, y, z, v, p, resolve):
 
         index = _resolve(x_proba, y_proba, z_proba, v_proba, resolve)
         if index == label:
-            correct_pred = correct_pred + 1
+            correct_pred += 1
         else:
-            wrong_pred = wrong_pred + 1
+            wrong_pred += 1
 
     assert correct_pred + wrong_pred == len(p), "length mismatch"
     return round((float(correct_pred) / float(len(p))), 5) * float(100)
