@@ -239,22 +239,11 @@ def bayesian_decision(tr_list, imdb_tr_list, te_list, imdb_te_list):
             te_list[i][k] = [float(1) - v, v]
 
     acc_dict = dict()
-    if len(tr_list) == 2:
-        for r in res:
-            a1 = mj2(tr_list[0], tr_list[1], imdb_tr_list, r)
-            a2 = mj2(te_list[0], te_list[1], imdb_te_list, r)
-            acc_dict[r] = [a1, a2]
-    
-    if len(tr_list) == 3:
-        for r in res_wt_maj:
-            a1 = mj3(tr_list[0], tr_list[1], tr_list[2], imdb_tr_list, r)
-            a2 = mj3(te_list[0], te_list[1], te_list[2], imdb_te_list, r)
-            acc_dict[r] = [a1, a2]
-    
-    if len(tr_list) == 4:
-        for r in res:
-            a1 = mj4(tr_list[0], tr_list[1], tr_list[2], tr_list[3], imdb_tr_list, r)
-            a2 = mj4(te_list[0], te_list[1], te_list[2], te_list[3], imdb_te_list, r)
-            acc_dict[r] = [a1, a2]
+    for L, F, res_list in [(2, mj2, res), (3, mj3, res_wt_maj), (4, mj4, res)]:
+        if len(tr_list) == L:
+            for r in res_list:
+                a1 = F(*tr_list[:L], imdb_tr_list, r)
+                a2 = F(*te_list[:L], imdb_te_list, r)
+                acc_dict[r] = [a1, a2]
 
     return acc_dict
