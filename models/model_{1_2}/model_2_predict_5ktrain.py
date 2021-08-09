@@ -22,6 +22,7 @@ import re
 from keras.models import load_model
 
 
+# Load weights of trained model from disk
 model = load_model('model_b_2.h5')
 
 TRAINING_SAMPLE = 5000
@@ -34,6 +35,7 @@ glove_file = "glove.6B.zip"
 EMBEDDING_SIZE = 100
 
 
+# This function is reused from model_2.py; refer to that script for more information
 def download(url_):
     if not os.path.exists(glove_file):
         print("downloading glove embedding .....")
@@ -45,6 +47,7 @@ def download(url_):
             z.extractall()
 
 
+# See the note above the download function
 def load_glove():
     with open("glove.6B.100d.txt", 'r') as glove_vectors:
         word_to_int = defaultdict(int)
@@ -69,6 +72,9 @@ list_of_filename = list()
 list_of_y = list()
 
 
+# Load text data from a local file and run preprocessing/cleaning filters
+# This function reuses filters from create_training_sample in model_2.py;
+# refer to that script for more information
 def create_training_sample(filename):
     df_train = pd.read_csv(train_csv_file)
     SAMPLE_SIZE = len(df_train)
@@ -101,6 +107,7 @@ def create_training_sample(filename):
         #train_y[index] = label
 
 
+# See this function's documentation in model_2.py for more information
 def encode_reviews(revs):
     train_data = []
     for review in revs:
@@ -124,6 +131,7 @@ print(train_reviews[0])
 MAX_REVIEW_LEN = 1200
 
 
+# See this function's documentation in model_2.py for more information
 def zero_pad_reviews(revs):
     _data_padded = []
     for review in revs:
@@ -137,6 +145,7 @@ def zero_pad_reviews(revs):
 train_reviews = zero_pad_reviews(train_reviews)
 
 
+# See this function's documentation in model_2.py for more information
 def review_ints_to_vecs(train_reviews):
     train_data = []
     for review in train_reviews:
@@ -144,6 +153,9 @@ def review_ints_to_vecs(train_reviews):
         train_data.append(vec_review)
     return train_data
 
+
+# The prediction/inference routine here is very similar to the analogous code in model_2_predict_25ktest.py;
+# refer to that script for details about generating predictions, calculating model accuracy, etc.
 
 train_reviews = np.array(review_ints_to_vecs(train_reviews))
 print(train_reviews.shape)
