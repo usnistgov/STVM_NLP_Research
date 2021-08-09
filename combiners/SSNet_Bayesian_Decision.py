@@ -103,24 +103,13 @@ def mj2(x, y, p, resolve):
             else:
                 wrong_pred = wrong_pred + 1
         else:
-            if resolve == 'max':
-                resolved_idx = _max(x_proba, y_proba)
-                if resolved_idx == label:
-                    correct_pred = correct_pred + 1
-                else:
-                    wrong_pred = wrong_pred + 1
-            if resolve == 'avg':
-                resolved_idx = _avg(x_proba, y_proba)
-                if resolved_idx == label:
-                    correct_pred = correct_pred + 1
-                else:
-                    wrong_pred = wrong_pred + 1
-            if resolve == 'sum':
-                resolved_idx = _sum(x_proba, y_proba)
-                if resolved_idx == label:
-                    correct_pred = correct_pred + 1
-                else:
-                    wrong_pred = wrong_pred + 1
+            for func_name, resolve_func in [('max', _max), ('avg', _avg), ('sum', _sum)]:
+                if resolve == func_name:
+                    resolved_idx = resolve_func(x_proba, y_proba)
+                    if resolved_idx == label:
+                        correct_pred = correct_pred + 1
+                    else:
+                        wrong_pred = wrong_pred + 1
 
     assert correct_pred + wrong_pred == len(p), "length mismatch"
     return round((float(correct_pred) / float(len(p))), 5) * float(100)
