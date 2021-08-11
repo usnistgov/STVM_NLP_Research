@@ -43,13 +43,16 @@ def get_model(arch_type):
     hub_layer = hub.KerasLayer(handle=use_model_url, output_shape = [vector_size], input_shape = [], dtype = tf.string, trainable = True, name="use_hub_layer")
     model = tf.keras.Sequential()
     
+#     Build model according to specified architecture
     if arch_type == 1:
+#         Densely-connected softmax classifier
         model.add(hub_layer)
         model.add(tf.keras.layers.Input(shape=(512,)))
         model.add(tf.keras.layers.Dense(16, activation='relu'))
         model.add(tf.keras.layers.Dense(class_num, activation="softmax", name="predictions"))
     
     elif arch_type == 2:
+#         Densely-connected classifier with dropout
         model.add(hub_layer)
         model.add(
         tf.keras.layers.Dense(
@@ -73,6 +76,7 @@ def get_model(arch_type):
         model.add(tf.keras.layers.Dense(imdb.class_num, activation='softmax'))
         
     elif arch_type == 3:
+#         Convolutional neural network
         model.add(Conv1D(32, kernel_size=3, activation='elu', padding='same',
                  input_shape=(vector_size, 1)))
         model.add(Conv1D(32, kernel_size=3, activation='elu', padding='same'))
@@ -103,7 +107,7 @@ def get_data_ready(df_data):
 
 # Fit model with the train data
 def fit_model(model, x_train, y_train, x_test, y_test):
-    #Use Adam optimizer to minimize the categorical_crossentropy loss
+    # Use Adam optimizer to minimize the categorical_crossentropy loss
     opt = Adam(learning_rate=LRATE)
     model.compile(optimizer=opt, 
           loss=LOSS,
@@ -141,9 +145,10 @@ def run_k_fold_cv(df_train, n_folds, *idx):
         train, test = df_train.iloc[train_idx], df_train.iloc[test_idx]
         if (partial_run and i in run_folds) or not partial_run:
 
-            # check class balance
+            # Check class balance
             print(test.loc[:, [imdb.label_column]].value_counts())
 
+            # Prepare training data
             x_train, y_train, df_fit_train = get_data_ready(train)
             
             x_test, y_test, df_fit_test = get_data_ready(test)
@@ -200,7 +205,8 @@ def evaluate_k_fold_cv(df_train, n_folds):
         root_name = model_utils.get_CV_model_root_name ('use', i, len(train_idx), EPOCHS)
         model_name = root_name + ".h5"
         print(model_name)
-
+        
+        # Load trained model from file
         from tensorflow.keras.models import load_model
         model = load_model(model_name, custom_objects={'KerasLayer':hub.KerasLayer})
 
