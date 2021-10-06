@@ -35,6 +35,7 @@ def get_model_performance(model, root_name, x_test, y_test, BATCH_SIZE):
     report = classification_report(np.argmax(y_test,axis=1), pred_test, digits=4)
     print(report)
     
+    # Load and display information about the performance (loss and accuracy metrics) attained by the provided model
     evalFile = get_CV_eval_root_name (root_name, len(y_test)) + '.txt'
     with open(evalFile, 'w') as f:
         print("The loss and accuracy are:", file=f)
@@ -57,16 +58,18 @@ def output_prob_file(df_data, file_root_name, prediction_prob):
     df_final.to_csv(result_file_name, index=False, columns = ['prob', 'file'], float_format='%.6f')
 
 
+# Get history of training and validation loss from model training session
 def get_history (history):
     # list all data in history
     print(history.history.keys())
     history.history
     
     
-    # summarize history for loss
+    # Summarize history for loss
     plt.ylabel('Loss')
     plt.xlabel('Epochs')
     plt.plot(history.history['loss'], color='blue', label='train')
+    # If validation loss was recorded in history, add it to the plot
     if "val_loss" in history.history:
         plt.plot(history.history['val_loss'], color='orange', label='val')
         plt.title('Train vs Validation Loss')
@@ -80,6 +83,7 @@ def get_history (history):
     plt.ylabel('Accuracy')
     plt.xlabel('Epochs')
     plt.plot(history.history['accuracy'], color='blue', label='train')
+    # If validation accuracy was recorded in history, add it to the plot
     if "val_accuracy" in history.history:
         plt.plot(history.history['val_accuracy'], color='orange', label='val')
         plt.title('Train vs Validation Accuracy')
@@ -89,12 +93,13 @@ def get_history (history):
     plt.show()
         
 
-# Define run types
+# Define run types and descriptions of each
 class RunType(Enum):
     FULL = 1
     SPLIT = 2
     SHORT = 3
     
+    # Return a RunType instance's name, value, and the corresponding description string
     def describe(self):
         description = "Full run"
         if (self is self.SPLIT):
@@ -111,6 +116,7 @@ class RunType(Enum):
 # Given a dataframe data, create model required fitted data
 def get_fit_data(df, shuffle, text_column, label_column):
     df_final = df
+    # Shuffle the dataset if enabled
     if shuffle == True:
         df_final = df.sample(frac=1, random_state=0)
     X_fit = df_final[text_column]
@@ -126,24 +132,24 @@ def get_categorical(Y):
     encoder = LabelEncoder()
     encoder.fit(Y)
     encoded_Y = encoder.transform(Y)
-    # convert integers to dummy variables (i.e. one hot encoded)
+    # Convert integers to dummy variables (i.e. one hot encoded)
     y_data = to_categorical(encoded_Y)
     return y_data, y_data.shape[1]
 
-# evaluate a model using k-fold cross-validation
+# Evaluate a model using k-fold cross-validation
 def evaluate_model(df, n_folds, model):
 	scores, histories = list(), list()
-	# prepare cross validation
+	# Prepare cross validation
 	kfold = KFold(n_folds, shuffle=True, random_state=1)
-	# enumerate splits
+	# Enumerate splits
 	for train_ix, test_ix in kfold.split(df):
 		train, test = df_train.iloc[train_idx], df_train.iloc[test_idx]
-		# fit model
+		# Fit model
 		history = model.fit(trainX, trainY, epochs=10, batch_size=32, validation_data=(testX, testY), verbose=0)
-		# evaluate model
+		# Evaluate model
 		_, acc = model.evaluate(testX, testY, verbose=0)
 		print('> %.3f' % (acc * 100.0))
-		# stores scores
+		# Stores scores
 		scores.append(acc)
 		histories.append(history)
 	return scores, histories
@@ -179,6 +185,7 @@ def evaluate_test_dataset_k_fold(x_test, y_test, n_folds, model_type, EPOCHS, BA
         model_name = root_name + ".h5"
         print(model_name)
         
+        # Load saved model weights
         model = load_model(model_name, custom_objects={'KerasLayer':hub.KerasLayer})
         
         prediction_prob, results = get_model_performance(model, root_name, x_test, y_test, BATCH_SIZE)
@@ -190,27 +197,26 @@ def evaluate_test_dataset_k_fold(x_test, y_test, n_folds, model_type, EPOCHS, BA
         print('> %.3f' % (float(acc) * 100.0))
         scores.append(acc)
 
-    # print summary
+    # Print summary of model evaluation statistics
     print('Accuracy: mean=%.3f std=%.3f, n=%d' % (mean(scores)*100, std(scores)*100, len(scores)))
-    # box and whisker plots of results
+    # Generate box and whisker plots of results
     plt.boxplot(scores)
     plt.show()
 
     
-# plot diagnostic learning curves
+# Plot diagnostic learning curves
 def summarize_diagnostics(histories):
-    # plot loss
+    # Plot loss
     plt.subplot(2, 1, 1)
     plt.ylabel('Loss')
     plt.xlabel('Epochs')
     plt.title('Train vs Validation Loss')
-    
     for i in range(len(histories)):
         plt.plot(histories[i].history['loss'], color='blue', label='train')
         plt.plot(histories[i].history['val_loss'], color='orange', label='val')
     plt.show()
     
-    # plot accuracy
+    # Plot accuracy
     plt.subplot(2, 1, 2)
     plt.ylabel('Accuracy')
     plt.xlabel('Epochs')
@@ -220,11 +226,11 @@ def summarize_diagnostics(histories):
         plt.plot(histories[i].history['val_accuracy'], color='orange', label='val')
     plt.show()
 
-# Display mean accuracy and std
+# Display mean accuracy and standard deviation
 def show_mean_acc_std(scores):
-    # print summary
+    # Print summary statistics
     print('Accuracy: mean=%.3f std=%.3f, n=%d' % (mean(scores)*100, std(scores)*100, len(scores)))
-    # box and whisker plots of results
+    # Generate box and whisker plots of results
     plt.boxplot(scores)
     plt.show()
     
